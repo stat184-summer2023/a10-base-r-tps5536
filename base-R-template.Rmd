@@ -1,6 +1,6 @@
 ---
-title: "Fix the title"
-author: "Your Name Here"
+title: "Base R"
+author: "Alex Su"
 date: "Add the date"
 output: 
     html_notebook
@@ -9,15 +9,22 @@ output:
 ### Question 1: Subsetting
 
 #### Select the element in 10th row and 5th column in `iris` dataset
+```{r}
+library(ggplot2)
+
+```
 
 ```{r}
 data(iris)
-
+iris[10, 5]
 ```
 
 
 #### Select the Species column in `iris` dataset and print the last 5 rows of that column
 ```{r}
+tail(iris$Species, n = 5)
+
+
 
 ```
 
@@ -25,6 +32,7 @@ data(iris)
 #### What is the average Sepal Length of flowers with Petal widths greater than 1? 
 
 ```{r}
+mean(iris$Sepal.Length[iris$Petal.Width > 1])
 
 
 ```
@@ -34,6 +42,13 @@ data(iris)
 #### Write a `for` loop that iterates over the numbers 1 to 10. If the number less than 5 print the multiple of 3 (multiply the number by 3), and if the number is greater than or equal to 5 print the multiple of 2 (multiply the number by 2). 
 
 ```{r}
+for (i in 1:10) {
+  if (i < 5) {
+    print(i * 3)
+  } else {
+    print(i * 2)
+  }
+}
 
 ```
 
@@ -41,7 +56,15 @@ data(iris)
 
 #### Write a `while` loop that prints out random normal numbers with mean equal 1 and standard deviation 2 (use rnorm()) but stops (breaks) if you get a number bigger than 3. Do not change the value inside set.seeed.
 ```{r}
+
 set.seed(184)
+while (TRUE) {
+  num <- rnorm(1, mean = 1, sd = 2)
+  print(num)
+  if (num > 3) {
+    break
+  }
+}
 
 ```
 
@@ -58,7 +81,13 @@ Hint: First identify the pattern(s) in the table before you create the for loop.
 | 3 | 4 | 5 | 6 |  
 
 ```{r}
-
+Counting <- data.frame(matrix(nrow = 3, ncol = 4))
+for (i in 1:3) {
+  for (j in 1:4) {
+    Counting[i, j] <- i + j
+  }
+}
+Counting
 ```
 
 ### Question 5: user defined functions
@@ -69,9 +98,14 @@ Hint: First identify the pattern(s) in the table before you create the for loop.
 
 ```{r}
 set.seed(184)
-plotNormal <- function(repitions, mean, sd){
-  
+plotNormal <- function(repitions, mean, sd) {
+  random_numbers <- rnorm(repitions, mean, sd)
+  hist(random_numbers)
 }
+
+plotNormal(1000, 0,1)
+
+
 
 
 ```
@@ -86,6 +120,13 @@ Repeat parts 5A and 5B, and add
 Call the function to generate 1000 random normal numbers with mean 0 and standard deviation 1 and plot a histogram. Make the bins blue.
 
 ```{r}
+set.seed(184)
+plotNormal <- function(repitions, mean, sd, color = "blue") {
+  random_numbers <- rnorm(repitions, mean, sd)
+  hist(random_numbers, col = color, main = paste("Histogram from a Normal(", mean, ", ", sd, ") Distribution", sep = ""))
+}
+
+plotNormal(1000, 0, 1, "blue")
 
 
 
